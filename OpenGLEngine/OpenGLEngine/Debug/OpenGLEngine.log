@@ -1,0 +1,10 @@
+﻿  Main.cpp
+c:\users\dhz\desktop\openglengine\openglengine\main.cpp(181): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\dhz\desktop\openglengine\openglengine\main.cpp(250): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dhz\desktop\openglengine\openglengine\main.cpp(251): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dhz\desktop\openglengine\openglengine\main.cpp(255): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\dhz\desktop\openglengine\openglengine\main.cpp(256): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\dhz\desktop\openglengine\openglengine\main.cpp(258): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dhz\desktop\openglengine\openglengine\main.cpp(259): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dhz\desktop\openglengine\openglengine\main.cpp(266): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  OpenGLEngine.vcxproj -> C:\Users\dhz\Desktop\OpenGLEngine\Debug\OpenGLEngine.exe
