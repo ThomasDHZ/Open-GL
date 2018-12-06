@@ -66,7 +66,7 @@ void Camera::Update(Shader shader, unsigned int ScreenWidth, unsigned int Screen
 	glm::mat4 projection = glm::perspective(glm::radians(Zoom), (float)ScreenWidth / (float)ScreenHeight, 0.1f, 100.0f);
 	glm::mat4 view = GetViewMatrix();
 
-	shader.SetVec3f("viewPos", Position);
-	shader.SetMatrix4fv("projection", projection); // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
+	shader.SetMatrix4fv("projection", projection); 
 	shader.SetMatrix4fv("view", view);
+	shader.SetVec3f("viewPos", Position);
 }

@@ -5,7 +5,7 @@
 #include "Texture.h"
 #include "Camera.h"
 #include "stb_image.h"
-#include "Light.h"
+#include "LightManager.h"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -174,7 +174,9 @@ int main()
 	Shader lampShader("LightShader");
 	Mesh mesh(lightingShader, "..//Resources//Textures//container2.png", "..//Resources//Textures//container2_specular.png", float(0.6f));
 	Mesh mesh2(lightingShader, "..//Resources//Textures//bricks.jpg", "..//Resources//Textures//container2_specular.png", float(0.6f));
-	Light light(vec3(1.2f, 1.0f, 2.0f));
+	DirectionalLight Dlight(vec3(1.2f, 1.0f, 2.0f),vec3(0.2f, 0.2f, 0.2f),vec3(0.5f, 0.5f, 0.5f),vec3(1.0f, 1.0f, 1.0f));
+	PointLight PLight(vec3(-1.2f, 1.0f, 2.0f), vec3(0.2f, 0.2f, 0.2f), vec3(0.2f, 0.2f, 0.2f), vec3(1.0f, 1.0f, 1.0f));
+	SpotLight SLight(camera.Position, camera.Front, vec3(0.1f, 0.1f, 0.1f), vec3(0.8f, 0.8f, 0.8f), vec3(0.8f, 0.8f, 0.8f), 2.0f, 0.09f, 0.032f, 12.5f, 17.5f);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -190,8 +192,9 @@ int main()
 
 		lightingShader.Bind();
 
+		SLight.SetPosition(camera.Position);
+		SLight.Update(lightingShader);
 
-		light.Update(lightingShader);
 		camera.Update(lightingShader, SCR_WIDTH, SCR_HEIGHT);
 
 		for (unsigned int i = 0; i < 10; i++)
