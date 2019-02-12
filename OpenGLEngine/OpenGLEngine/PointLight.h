@@ -4,14 +4,19 @@
 #define POINTLIGHT_H
 
 #include "Shader.h"
+#include "Camera.h"
+#include "VideoGameMath.h"
 #include <glm/glm.hpp>
 
 
 using namespace glm;
+using namespace std;
 
 class PointLight
 {
 private:
+	string LightName;
+
 	vec3 Position;
 	vec3 Ambient;
 	vec3 Diffuse;
@@ -19,17 +24,21 @@ private:
 
 	float Constant;
 	float Linear;
-	float Quadratic; 
+	float Quadratic;
 
 	int Index;
 
+	float CameraDistance;
+
 public:
 	PointLight();
+	PointLight(string Lightname, vec3 position, vec3 ambient, vec3 diffuse, vec3 specular);
 	PointLight(vec3 position, vec3 ambient, vec3 diffuse, vec3 specular);
 	PointLight(vec3 position, vec3 ambient, vec3 diffuse, vec3 specular, float constant, float linear, float quadratic);
 	~PointLight();
 
-	void Update(Shader shader);
+	void Update(Shader shader, Camera camera);
+	void UpdateCameraDistance(Camera camera);
 
 	void SetPosition(vec3 position);
 	void SetPosition(float x, float y, float z);
@@ -44,8 +53,14 @@ public:
 	void SetLinear(float linear);
 	void SetQuadratic(float quadratic);
 
+	void OutOfRange(Shader shader);
+
 	void SetIndex(int index);
 
+	bool operator< (const PointLight &OtherPointLight) const
+	{
+		return CameraDistance < OtherPointLight.CameraDistance;
+	}
 	vec3 GetPosition()
 	{
 		return Position;
@@ -73,6 +88,14 @@ public:
 	float GetQuadratic()
 	{
 		return Quadratic;
+	}
+	int GetIndex()
+	{
+		return Index;
+	}
+	float GetCameraDistance()
+	{
+		return CameraDistance;
 	}
 };
 

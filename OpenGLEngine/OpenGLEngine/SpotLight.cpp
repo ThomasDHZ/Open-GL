@@ -1,4 +1,5 @@
 #include "SpotLight.h"
+#include "VideoGameMath.h"
 
 SpotLight::SpotLight()
 {
@@ -43,17 +44,34 @@ SpotLight::~SpotLight()
 
 void SpotLight::Update(Shader shader)
 {
-	shader.SetVec3f("light.position", Position);
-	shader.SetVec3f("light.direction", Direction);
-	shader.SetVec3f("light.ambient", Ambient);
-	shader.SetVec3f("light.diffuse", Diffuse);
-	shader.SetVec3f("light.specular", Specular);
+	shader.SetVec3("spotLight.position", Position);
+	shader.SetVec3("spotLight.direction", Direction);
+	shader.SetVec3("spotLight.ambient", Ambient);
+	shader.SetVec3("spotLight.diffuse", Diffuse);
+	shader.SetVec3("spotLight.specular", Specular);
 
-	shader.SetFloat("light.constant", Constant);
-	shader.SetFloat("light.linear", Linear);
-	shader.SetFloat("light.quadratic", Quadratic);
-	shader.SetFloat("light.cutOff", cos(radians(CutOff)));
-	shader.SetFloat("light.outerCutOff", cos(radians(OuterCutOff)));
+	shader.SetFloat("spotLight.constant", Constant);
+	shader.SetFloat("spotLight.linear", Linear);
+	shader.SetFloat("spotLight.quadratic", Quadratic);
+	shader.SetFloat("spotLight.cutOff", cos(radians(CutOff)));
+	shader.SetFloat("spotLight.outerCutOff", cos(radians(OuterCutOff)));
+
+	/*shader.setVec3("spotLights[" + std::to_string(Index) + "].position", Position);
+	shader.setVec3("spotLights[" + std::to_string(Index) + "].direction", Direction);
+	shader.setVec3("spotLights[" + std::to_string(Index) + "].ambient", Ambient);
+	shader.setVec3("spotLights[" + std::to_string(Index) + "].diffuse", Diffuse);
+	shader.setVec3("spotLights[" + std::to_string(Index) + "].specular", Specular);
+
+	shader.setFloat("spotLights[" + std::to_string(Index) + "].constant", Constant);
+	shader.setFloat("spotLights[" + std::to_string(Index) + "].linear", Linear);
+	shader.setFloat("spotLights[" + std::to_string(Index) + "].quadratic", Quadratic);
+	shader.setFloat("spotLights[" + std::to_string(Index) + "].cutOff", cos(radians(CutOff)));
+	shader.setFloat("spotLights[" + std::to_string(Index) + "].outerCutOff", cos(radians(OuterCutOff)));*/
+}
+
+void SpotLight::UpdateCameraDistance(Camera camera)
+{
+	CameraDistance = VideoGameMath::ObjectDistance(camera.GetCameraPosition(), GetPosition());
 }
 
 void SpotLight::SetPosition(vec3 position)

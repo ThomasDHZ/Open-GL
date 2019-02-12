@@ -27,6 +27,7 @@ private:
 	float OuterCutOff;
 
 	int Index;
+	float CameraDistance;
 
 public:
 	SpotLight();
@@ -35,6 +36,7 @@ public:
 	~SpotLight();
 
 	void Update(Shader shader);
+	void UpdateCameraDistance(Camera camera);
 
 	void SetPosition(vec3 position);
 	void SetPosition(float x, float y, float z);
@@ -55,6 +57,10 @@ public:
 
 	void SetIndex(int index);
 
+	bool operator< (const SpotLight &OtherPointLight) const
+	{
+		return CameraDistance < OtherPointLight.CameraDistance;
+	}
 	vec3 GetPosition()
 	{
 		return Position;
@@ -94,6 +100,10 @@ public:
 	float GetOuterCutOff()
 	{
 		return OuterCutOff;
+	}
+	float GetCameraDistance()
+	{
+		return CameraDistance;
 	}
 };
 

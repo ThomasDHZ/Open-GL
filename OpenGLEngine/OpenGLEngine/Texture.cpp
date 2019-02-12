@@ -1,68 +1,34 @@
 #include "Texture.h"
-#include <cassert>
-#include "stb_image.h"
+
+
+
+Texture::Texture(Shader shader,  string DiffuseMapPath, string SpecularMapPath)
+{
+	DiffuseMap = LoadTexture(FileSystem::getPath("resources/textures/container2.png").c_str());
+	SpecularMap = LoadTexture(FileSystem::getPath("resources/textures/container2_specular.png").c_str());
+
+	shader.Use();
+	shader.SetInt("material.diffuse", 0);
+	shader.SetInt("material.specular", 1);
+}
+
 Texture::Texture()
 {
 
 }
-Texture::Texture(Shader shader)
-{
-	shader.Bind();
-}
-Texture::Texture(Shader shader, string DiffuseMapPath, string SpecularMapPath, float shininess)
-{
-	DiffuseMap = LoadTexture(DiffuseMapPath.c_str());
-	SpecularMap = LoadTexture(SpecularMapPath.c_str());
-	Shininess = shininess;
-	shader.Bind();
-}
 
 Texture::~Texture()
 {
-
 }
+
 void Texture::Update(Shader shader)
 {
-	shader.SetInt("material.diffuse", 0);
-	shader.SetInt("material.specular", 1);
-	shader.SetFloat("material.shininess", Shininess);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, DiffuseMap);
 
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, SpecularMap);
-}
-
-void Texture::SetDiffuseMap(string DiffuseMapPath)
-{
-	DiffuseMap = LoadTexture(DiffuseMapPath.c_str());
-}
-
-void Texture::SetSpecularMap(string SpecularMapPath)
-{
-	SpecularMap = LoadTexture(SpecularMapPath.c_str());
-}
-
-void Texture::SetShininess(float shininess)
-{
-	Shininess = shininess;
-}
-
-void Texture::RemoveDiffuseMap()
-{
-	glDeleteTextures(1, &DiffuseMap);
-}
-
-void Texture::RemoveSpecularMap()
-{
-	glDeleteTextures(1, &SpecularMap);
-}
-
-void Texture::RemoveAllTextures()
-{
-	glDeleteTextures(1, &DiffuseMap);
-	glDeleteTextures(1, &SpecularMap);
 }
 
 unsigned int Texture::LoadTexture(char const * path)

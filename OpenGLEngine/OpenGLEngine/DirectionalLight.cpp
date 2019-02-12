@@ -18,10 +18,15 @@ DirectionalLight::~DirectionalLight()
 
 void DirectionalLight::Update(Shader shader)
 {
-	shader.SetVec3f("light.direction", Direction);
-	shader.SetVec3f("light.ambient", Ambient);
-	shader.SetVec3f("light.diffuse", Diffuse);
-	shader.SetVec3f("light.specular", Specular);
+	shader.SetVec3("dirLights[" + std::to_string(Index) + "].direction", Direction);
+	shader.SetVec3("dirLights[" + std::to_string(Index) + "].ambient", Ambient);
+	shader.SetVec3("dirLights[" + std::to_string(Index) + "].diffuse", Diffuse);
+	shader.SetVec3("dirLights[" + std::to_string(Index) + "].specular", Specular);
+
+	shader.SetVec3("dirLight.direction", Direction);
+	shader.SetVec3("dirLight.ambient", Ambient);
+	shader.SetVec3("dirLight.diffuse", Diffuse);
+	shader.SetVec3("dirLight.specular", Specular);
 }
 
 void DirectionalLight::SetDirection(vec3 direction)
@@ -31,7 +36,7 @@ void DirectionalLight::SetDirection(vec3 direction)
 
 void DirectionalLight::SetDirection(float x, float y, float z)
 {
-	Direction = vec3(x,y,z);
+	Direction = vec3(x, y, z);
 }
 
 void DirectionalLight::SetAmbient(vec3 ambient)

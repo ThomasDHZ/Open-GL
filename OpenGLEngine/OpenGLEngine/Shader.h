@@ -3,50 +3,40 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include "Include.h"
+
+#include <glad/glad.h>
+#include <glm/glm.hpp>
+
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
 
 using namespace std;
-using namespace glm;
+
 
 class Shader
 {
-	private:
-		static const unsigned int NUM_SHADER = 2;
+public:
+	unsigned int ShaderID;
+	Shader(const char* vertexPath, const char* fragmentPath, const char* geometryPath = nullptr);
+	void Use();
+	void Update();
+	void SetBool(const string &name, bool value) const;
+	void SetInt(const string &name, int value) const;
+	void SetFloat(const string &name, float value) const;
+	void SetVec2(const string &name, const glm::vec2 &value) const;
+	void SetVec2(const string &name, float x, float y) const;
+	void SetVec3(const string &name, const glm::vec3 &value) const;
+	void SetVec3(const string &name, float x, float y, float z) const;
+	void SetVec4(const string &name, const glm::vec4 &value) const;
+	void SetVec4(const string &name, float x, float y, float z, float w);
+	void SetMat2(const string &name, const glm::mat2 &mat) const;
+	void SetMat3(const string &name, const glm::mat3 &mat) const;
+	void SetMat4(const string &name, const glm::mat4 &mat) const;
 
-		GLuint m_program;
-		GLuint m_shaders[NUM_SHADER];
-
-		mat4 ModelMatrix;
-		string LoadShader(const string& fileName);
-		GLuint CreateShader(const string& text, GLenum ShaderType);
-		void CheckShaderError(GLuint shader, GLuint flag, bool isProgram, const string& errorMessage);
-
-	public:
-		Shader(const string& fileNam);
-		void Bind();
-		void Update();
-		GLuint GetShaderProgram()
-		{
-			return m_program;
-		}
-		GLuint GetShaderUniformLocation(GLchar *Variable)
-		{
-			return glGetUniformLocation(m_program, Variable);
-		
-		}
-		GLuint GetShaderAttributeLocation(GLchar *Variable)
-		{
-			return glGetAttribLocation(m_program, Variable);
-		}
-		void SetInt(const GLchar* IDLocation, int value);
-		void SetFloat (const GLchar* IDLocation, float value);
-		void SetVec3f(const GLchar* IDLocation, GLfloat x, GLfloat y, GLfloat z);
-		void SetVec3f(const GLchar* IDLocation, vec3 xyz);
-		void SetVec4f(const GLchar* IDLocation, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
-		void SetMatrix4fv(const GLchar* IDLocation, mat4 &Matrix);
-
-		virtual ~Shader();
-
+private:
+	void CheckCompileErrors(GLuint shader, std::string type);
 };
 
 #endif
